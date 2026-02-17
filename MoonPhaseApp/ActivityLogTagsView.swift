@@ -6,6 +6,7 @@ struct ActivityLogTagsView: View {
     let language: AppLanguage
 
     @State private var newTagText = ""
+    @State private var editableDate = Date()
 
     private func localized(_ english: String, _ spanish: String) -> String {
         language == .spanish ? spanish : english
@@ -34,6 +35,15 @@ struct ActivityLogTagsView: View {
             if let log {
                 List {
                     Section(localized("Log", "Registro")) {
+                        DatePicker(
+                            localized("Date and time", "Fecha y hora"),
+                            selection: $editableDate,
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                        .onChange(of: editableDate) { _, value in
+                            logStore.updateLogDate(id: logID, newDate: value)
+                        }
+
                         Text(dateFormatter().string(from: log.createdAt))
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -103,6 +113,16 @@ struct ActivityLogTagsView: View {
         }
         .navigationTitle(localized("Edit Tags", "Editar etiquetas"))
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if let current = log {
+                editableDate = current.createdAt
+            }
+        }
+        .onChange(of: log?.createdAt) { _, value in
+            if let value {
+                editableDate = value
+            }
+        }
     }
 }
 

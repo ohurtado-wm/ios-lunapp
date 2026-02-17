@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ReminderSettingsView: View {
+struct SettingsView: View {
     @EnvironmentObject private var settings: AppSettings
     let language: AppLanguage
 
@@ -42,6 +42,24 @@ struct ReminderSettingsView: View {
                 }
             }
 
+            Section {
+                Picker(localized("AI mode", "Modo de IA"), selection: $settings.aiMode) {
+                    ForEach(AIMode.allCases, id: \.rawValue) { mode in
+                        Text(mode.localizedTitle(language: language)).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                Text(localized(
+                    "LLM mode is shown for configuration, but not implemented yet.",
+                    "El modo LLM esta disponible en configuracion, pero aun no esta implementado."
+                ))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            } header: {
+                Text(localized("AI Settings", "Ajustes de IA"))
+            }
+
             if !savedMessage.isEmpty {
                 Section {
                     Text(savedMessage)
@@ -49,7 +67,7 @@ struct ReminderSettingsView: View {
                 }
             }
         }
-        .navigationTitle(localized("Reminder Settings", "Ajustes de recordatorio"))
+        .navigationTitle(localized("Settings", "Ajustes"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -69,7 +87,7 @@ private extension AppSettings {
 
 #Preview {
     NavigationStack {
-        ReminderSettingsView(language: .english)
+        SettingsView(language: .english)
             .environmentObject(AppSettings())
     }
 }

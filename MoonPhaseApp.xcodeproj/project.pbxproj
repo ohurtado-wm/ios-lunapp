@@ -12,10 +12,11 @@
 		A1B2C3D40100000300000001 /* MoonPhaseCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000300000001 /* MoonPhaseCalculator.swift */; };
 		A1B2C3D40100000600000001 /* PhaseActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000600000001 /* PhaseActivitiesView.swift */; };
 		A1B2C3D40100000700000001 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000700000001 /* AppSettings.swift */; };
-		A1B2C3D40100000800000001 /* ReminderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000800000001 /* ReminderSettingsView.swift */; };
+		A1B2C3D40100000800000001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000800000001 /* SettingsView.swift */; };
 		A1B2C3D40100000900000001 /* ActivityLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000900000001 /* ActivityLogStore.swift */; };
 		A1B2C3D40100001000000001 /* ActivityLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001000000001 /* ActivityLogView.swift */; };
 		A1B2C3D40100001100000001 /* ActivityLogTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */; };
+		A1B2C3D40100001200000001 /* LogAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001200000001 /* LogAssistantView.swift */; };
 		A1B2C3D40100000400000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000400000001 /* Assets.xcassets */; };
 		A1B2C3D40100000500000001 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100000500000001 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -27,10 +28,11 @@
 		A1B2C3D30100000300000001 /* MoonPhaseCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonPhaseCalculator.swift; sourceTree = "<group>"; };
 		A1B2C3D30100000600000001 /* PhaseActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseActivitiesView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100000700000001 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
-		A1B2C3D30100000800000001 /* ReminderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSettingsView.swift; sourceTree = "<group>"; };
+		A1B2C3D30100000800000001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100000900000001 /* ActivityLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogStore.swift; sourceTree = "<group>"; };
 		A1B2C3D30100001000000001 /* ActivityLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogTagsView.swift; sourceTree = "<group>"; };
+		A1B2C3D30100001200000001 /* LogAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogAssistantView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100000400000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1B2C3D30100000500000001 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,10 +64,11 @@
 				A1B2C3D30100000300000001 /* MoonPhaseCalculator.swift */,
 				A1B2C3D30100000600000001 /* PhaseActivitiesView.swift */,
 				A1B2C3D30100000700000001 /* AppSettings.swift */,
-				A1B2C3D30100000800000001 /* ReminderSettingsView.swift */,
+				A1B2C3D30100000800000001 /* SettingsView.swift */,
 				A1B2C3D30100000900000001 /* ActivityLogStore.swift */,
 				A1B2C3D30100001000000001 /* ActivityLogView.swift */,
 				A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */,
+				A1B2C3D30100001200000001 /* LogAssistantView.swift */,
 				A1B2C3D30100000400000001 /* Assets.xcassets */,
 				A1B2C3D10100000200000001 /* Preview Content */,
 			);
@@ -163,10 +166,11 @@
 				A1B2C3D40100000300000001 /* MoonPhaseCalculator.swift in Sources */,
 				A1B2C3D40100000600000001 /* PhaseActivitiesView.swift in Sources */,
 				A1B2C3D40100000700000001 /* AppSettings.swift in Sources */,
-				A1B2C3D40100000800000001 /* ReminderSettingsView.swift in Sources */,
+				A1B2C3D40100000800000001 /* SettingsView.swift in Sources */,
 				A1B2C3D40100000900000001 /* ActivityLogStore.swift in Sources */,
 				A1B2C3D40100001000000001 /* ActivityLogView.swift in Sources */,
 				A1B2C3D40100001100000001 /* ActivityLogTagsView.swift in Sources */,
+				A1B2C3D40100001200000001 /* LogAssistantView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

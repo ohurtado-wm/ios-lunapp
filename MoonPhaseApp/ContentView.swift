@@ -67,12 +67,12 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
-                    ReminderSettingsView(language: language)
+                    SettingsView(language: language)
                         .environmentObject(settings)
                 } label: {
-                    Image(systemName: "bell.badge")
+                    Image(systemName: "gearshape")
                 }
-                .accessibilityLabel(localized("Reminder settings", "Ajustes de recordatorio"))
+                .accessibilityLabel(localized("Settings", "Ajustes"))
             }
         }
         .overlay(alignment: .bottomTrailing) {
@@ -104,6 +104,21 @@ struct ContentView: View {
             }
             .accessibilityLabel(localized("Add activity log", "Agregar registro de actividad"))
             .padding(.leading, 20)
+            .padding(.bottom, 24)
+        }
+        .overlay(alignment: .bottom) {
+            NavigationLink {
+                LogAssistantView(language: language)
+                    .environmentObject(logStore)
+            } label: {
+                Image(systemName: "sparkles")
+                    .font(.title2.weight(.bold))
+                    .frame(width: 58, height: 58)
+                    .background(Color.blue, in: Circle())
+                    .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.2), radius: 6, x: 0, y: 4)
+            }
+            .accessibilityLabel(localized("Ask AI about logs", "Preguntar a la IA sobre registros"))
             .padding(.bottom, 24)
         }
     }

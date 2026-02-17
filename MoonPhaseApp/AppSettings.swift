@@ -2,14 +2,35 @@ import Foundation
 import Combine
 import UserNotifications
 
+enum AIMode: String, CaseIterable {
+    case local
+    case llm
+
+    func localizedTitle(language: AppLanguage) -> String {
+        switch (self, language) {
+        case (.local, .english): return "Local AI"
+        case (.local, .spanish): return "IA local"
+        case (.llm, .english): return "LLM"
+        case (.llm, .spanish): return "LLM"
+        }
+    }
+}
+
 final class AppSettings: ObservableObject {
     @Published var notificationTime: Date
+    @Published var aiMode: AIMode {
+        didSet {
+            UserDefaults.standard.set(aiMode.rawValue, forKey: Self.aiModeKey)
+        }
+    }
 
     private static let reminderHourKey = "reminder_hour"
     private static let reminderMinuteKey = "reminder_minute"
+    private static let aiModeKey = "ai_mode"
 
     init() {
         self.notificationTime = Self.loadNotificationTime()
+        self.aiMode = Self.loadAIMode()
         let values = Self.loadReminderHourMinute()
         ReminderNotificationManager.shared.scheduleIfAuthorized(
             hour: values.hour,
@@ -37,6 +58,11 @@ final class AppSettings: ObservableObject {
         let hour = defaults.object(forKey: reminderHourKey) as? Int ?? 9
         let minute = defaults.object(forKey: reminderMinuteKey) as? Int ?? 0
         return (hour, minute)
+    }
+
+    private static func loadAIMode() -> AIMode {
+        let raw = UserDefaults.standard.string(forKey: aiModeKey) ?? AIMode.local.rawValue
+        return AIMode(rawValue: raw) ?? .local
     }
 
     private static func loadNotificationTime() -> Date {
