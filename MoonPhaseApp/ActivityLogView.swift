@@ -8,6 +8,7 @@ struct ActivityLogView: View {
     @State private var selectedTagID: String? = nil
     @State private var pendingDeleteLog: ActivityLog? = nil
     @State private var selectedLogForEdit: ActivityLog? = nil
+    @FocusState private var isEntryFocused: Bool
 
     private func localized(_ english: String, _ spanish: String) -> String {
         language == .spanish ? spanish : english
@@ -39,6 +40,7 @@ struct ActivityLogView: View {
                     TextEditor(text: $entryText)
                         .frame(minHeight: 110)
                         .padding(8)
+                        .focused($isEntryFocused)
                         .scrollContentBackground(.hidden)
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -49,6 +51,7 @@ struct ActivityLogView: View {
                     Button {
                         logStore.addLog(text: entryText)
                         entryText = ""
+                        isEntryFocused = false
                     } label: {
                         Text(localized("Save log", "Guardar registro"))
                             .frame(maxWidth: .infinity)
@@ -132,7 +135,16 @@ struct ActivityLogView: View {
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
+        .scrollDismissesKeyboard(.interactively)
         .background(Color(.systemGroupedBackground))
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button(localized("Done", "Listo")) {
+                    isEntryFocused = false
+                }
+            }
+        }
         .navigationTitle(localized("Logs", "Registros"))
         .navigationBarTitleDisplayMode(.inline)
         .confirmationDialog(
