@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: MoonPhaseViewModel
     @EnvironmentObject private var settings: AppSettings
+    @EnvironmentObject private var logStore: ActivityLogStore
     private let language = AppLanguage.current
 
     private func dateFormatter(for language: AppLanguage) -> DateFormatter {
@@ -89,10 +90,27 @@ struct ContentView: View {
             .padding(.trailing, 20)
             .padding(.bottom, 24)
         }
+        .overlay(alignment: .bottomLeading) {
+            NavigationLink {
+                ActivityLogView(language: language)
+                    .environmentObject(logStore)
+            } label: {
+                Image(systemName: "plus")
+                    .font(.title2.weight(.bold))
+                    .frame(width: 58, height: 58)
+                    .background(Color.green, in: Circle())
+                    .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.2), radius: 6, x: 0, y: 4)
+            }
+            .accessibilityLabel(localized("Add activity log", "Agregar registro de actividad"))
+            .padding(.leading, 20)
+            .padding(.bottom, 24)
+        }
     }
 }
 
 #Preview {
     ContentView(viewModel: MoonPhaseViewModel())
         .environmentObject(AppSettings())
+        .environmentObject(ActivityLogStore())
 }
