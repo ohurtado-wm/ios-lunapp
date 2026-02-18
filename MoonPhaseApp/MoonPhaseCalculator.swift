@@ -332,6 +332,16 @@ struct MoonPhaseCalculator {
         let index = Int((normalized * 8).rounded()) % 8
         return MoonPhase.allCases[index]
     }
+
+    func cycleStart(for date: Date = Date()) -> Date {
+        let daysSinceReference = date.timeIntervalSince(referenceNewMoon) / 86_400
+        let cycleIndex = floor(daysSinceReference / synodicMonth)
+        return referenceNewMoon.addingTimeInterval(cycleIndex * synodicMonth * 86_400)
+    }
+
+    func cycleLengthDays() -> Double {
+        synodicMonth
+    }
 }
 
 final class MoonPhaseViewModel: ObservableObject {

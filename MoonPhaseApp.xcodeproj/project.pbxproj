@@ -19,6 +19,7 @@
 		A1B2C3D40100001000000001 /* ActivityLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001000000001 /* ActivityLogView.swift */; };
 		A1B2C3D40100001100000001 /* ActivityLogTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */; };
 		A1B2C3D40100001200000001 /* LogAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001200000001 /* LogAssistantView.swift */; };
+		A1B2C3D40100001300000001 /* MoonCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30100001300000001 /* MoonCalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		A1B2C3D30100001000000001 /* ActivityLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLogTagsView.swift; sourceTree = "<group>"; };
 		A1B2C3D30100001200000001 /* LogAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogAssistantView.swift; sourceTree = "<group>"; };
+		A1B2C3D30100001300000001 /* MoonCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonCalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				A1B2C3D30100001000000001 /* ActivityLogView.swift */,
 				A1B2C3D30100001100000001 /* ActivityLogTagsView.swift */,
 				A1B2C3D30100001200000001 /* LogAssistantView.swift */,
+				A1B2C3D30100001300000001 /* MoonCalendarView.swift */,
 				A1B2C3D30100000400000001 /* Assets.xcassets */,
 				A1B2C3D10100000200000001 /* Preview Content */,
 			);
@@ -171,6 +174,7 @@
 				A1B2C3D40100001000000001 /* ActivityLogView.swift in Sources */,
 				A1B2C3D40100001100000001 /* ActivityLogTagsView.swift in Sources */,
 				A1B2C3D40100001200000001 /* LogAssistantView.swift in Sources */,
+				A1B2C3D40100001300000001 /* MoonCalendarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

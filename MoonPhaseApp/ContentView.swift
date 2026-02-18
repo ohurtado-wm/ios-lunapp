@@ -4,7 +4,13 @@ struct ContentView: View {
     @ObservedObject var viewModel: MoonPhaseViewModel
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var logStore: ActivityLogStore
+    @State private var showMoonCalendar = false
+    @State private var dayOffset = 0
+    @State private var dragOffset: CGFloat = 0
     private let language = AppLanguage.current
+    private let calculator = MoonPhaseCalculator()
+    private let moonSize: CGFloat = 220
+    private let moonSpacing: CGFloat = 24
 
     private func dateFormatter(for language: AppLanguage) -> DateFormatter {
         let formatter = DateFormatter()
@@ -18,6 +24,28 @@ struct ContentView: View {
         language == .spanish ? spanish : english
     }
 
+    private var displayedDate: Date {
+        Calendar.current.date(byAdding: .day, value: dayOffset, to: viewModel.today) ?? viewModel.today
+    }
+
+    private var displayedPhase: MoonPhase {
+        calculator.phase(for: displayedDate)
+    }
+
+    private var displayedAgriculturalPhase: AgriculturalMoonPhase {
+        displayedPhase.agriculturalPhase
+    }
+
+    private func shiftDay(by delta: Int) {
+        let next = dayOffset + delta
+        dayOffset = min(29, max(-29, next))
+    }
+
+    private func phase(at offset: Int) -> MoonPhase {
+        let date = Calendar.current.date(byAdding: .day, value: offset, to: viewModel.today) ?? viewModel.today
+        return calculator.phase(for: date)
+    }
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -25,31 +53,80 @@ struct ContentView: View {
                     .font(.largeTitle.bold())
                     .multilineTextAlignment(.center)
 
-                Text(dateFormatter(for: language).string(from: viewModel.today))
+                Text(dateFormatter(for: language).string(from: displayedDate))
                     .font(.headline)
                     .foregroundStyle(.secondary)
 
-                Text(viewModel.phase.reminderMessage(language: language, for: viewModel.today))
+                Text(displayedPhase.reminderMessage(language: language, for: displayedDate))
                     .font(.body)
                     .multilineTextAlignment(.center)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
-                Image(viewModel.phase.assetName)
-                    .resizable()
-                    .interpolation(.high)
-                    .scaledToFit()
-                    .frame(width: 220, height: 220)
-                    .accessibilityLabel(viewModel.phase.localizedName(language: language))
+                HStack(spacing: moonSpacing) {
+                    Image(phase(at: dayOffset - 1).assetName)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .frame(width: moonSize, height: moonSize)
+                        .opacity(0.45)
+                        .scaleEffect(0.88)
 
-                Text(viewModel.phase.localizedName(language: language))
+                    Image(displayedPhase.assetName)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .frame(width: moonSize, height: moonSize)
+                        .accessibilityLabel(displayedPhase.localizedName(language: language))
+
+                    Image(phase(at: dayOffset + 1).assetName)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .frame(width: moonSize, height: moonSize)
+                        .opacity(0.45)
+                        .scaleEffect(0.88)
+                }
+                .offset(x: -(moonSize + moonSpacing) + dragOffset)
+                .frame(width: moonSize, height: moonSize)
+                .clipped()
+                .contentShape(Rectangle())
+                .gesture(
+                    DragGesture(minimumDistance: 12)
+                        .onChanged { value in
+                            dragOffset = value.translation.width
+                        }
+                        .onEnded { value in
+                            let threshold: CGFloat = 55
+                            if value.translation.width <= -threshold {
+                                withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                                    shiftDay(by: 1)
+                                    dragOffset = 0
+                                }
+                            } else if value.translation.width >= threshold {
+                                withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                                    shiftDay(by: -1)
+                                    dragOffset = 0
+                                }
+                            } else {
+                                withAnimation(.spring(response: 0.28, dampingFraction: 0.9)) {
+                                    dragOffset = 0
+                                }
+                            }
+                        }
+                )
+                .onTapGesture(count: 2) {
+                    showMoonCalendar = true
+                }
+
+                Text(displayedPhase.localizedName(language: language))
                     .font(.title2.weight(.semibold))
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text(localized("Today's Activities", "Actividades de hoy"))
                         .font(.title3.bold())
-                    ForEach(viewModel.todayAgriculturalPhase.activities(language: language), id: \.self) { activity in
+                    ForEach(displayedAgriculturalPhase.activities(language: language), id: \.self) { activity in
                         HStack(alignment: .top, spacing: 8) {
                             Text("•")
                             Text(activity)
@@ -64,8 +141,11 @@ struct ContentView: View {
         }
         .navigationTitle(localized("Moon & Agriculture", "Luna y agricultura"))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $showMoonCalendar) {
+            MoonCalendarView(language: language)
+        }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 NavigationLink {
                     SettingsView(language: language)
                         .environmentObject(settings)
@@ -77,7 +157,7 @@ struct ContentView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             NavigationLink {
-                PhaseActivitiesView(language: language, initialPhase: viewModel.todayAgriculturalPhase)
+                PhaseActivitiesView(language: language, initialPhase: displayedAgriculturalPhase)
             } label: {
                 Image(systemName: "moon.stars.fill")
                     .font(.title2.weight(.semibold))
